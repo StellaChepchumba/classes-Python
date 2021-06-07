@@ -42,8 +42,7 @@ class BankAccount:
             }
                 self.statement.append(withdrawals)
         return self.showBalance()
-
-            
+    
     def addLoan(self,amount):
         return f"hello {self.name},you can add a loan of {amount-self.loan}"
     def payloan(self,amount):
@@ -56,4 +55,46 @@ class BankAccount:
             date=time.strftime("%d/%m/%y")
             print(f"{date}:{narration} {amount}")
         return 
-               
+    def borrow(self,amount):
+        if amount<0:
+            return "Your amount is too low"
+        elif self.loan>0:
+            return "you already have a loan"
+        elif amount<0.1*self.balance:
+            return "you are not qualified for the loan"    
+        else:
+            loan=amount*1.05
+            self.loan=loan
+            self.balance +=amount
+            now=datetime.now()
+            transaction={
+                "amount":amount,
+                "time":now,
+                "narration":"you have borrowed"
+            }
+            self.statement.append(transaction)
+            return "you have successfully borrowed loan"
+
+    def repayloan(self,amount):
+        if amount<0:
+            return "you cannot repay with that"
+        elif amount<self.loan:
+            self.loan-=amount
+            return "you have qualifified for this loan"
+        else:
+            diff=amount-self.loan
+            self.loan=0
+            self.deposit(diff)
+            now=datetime.now()
+            transaction={
+                "amount":amount,
+                "time":now,
+                "narration":"you have repayed"
+            }
+            self.statement.append(transaction)
+            return "you have successfully paid your loan"
+
+
+           
+
+
