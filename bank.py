@@ -89,7 +89,7 @@ class BankAccount:
             transaction={
                 "amount":amount,
                 "time":now,
-                "narration":"you have repayed"
+                "narration":"you have repayed with this amount"
             }
             self.statement.append(transaction)
             return "you have successfully paid your loan"
